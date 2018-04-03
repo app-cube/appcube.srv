@@ -1,6 +1,7 @@
 import { Server } from 'hapi';
 import { AppServerOptions, AppInternalSettings} from '../../types';
 import { register_plugins } from '../../plugins/registration';
+import { Context } from '../context';
 
 export class AppServer extends Server {
 
@@ -30,5 +31,13 @@ export class AppServer extends Server {
         } catch (e) {
             console.log('Could not start server. Error: ' + JSON.stringify(e));
         }
+    }
+
+    get_context_instance = () => {
+        return new Context(this);
+    }
+
+    get_service_instance = (name: string, context?: Context) => {
+        let ctx = context ? context: this.get_context_instance();        
     }
 }

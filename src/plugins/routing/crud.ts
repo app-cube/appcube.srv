@@ -15,8 +15,11 @@ export const init_crud_routing = (server: AppServer, config: EndPointConfig) => 
             options: {
                 cors: true,
                 handler: (req: Request) => {
-                    return new Promise(ok => {
-                        ok('get successful')
+                    return call({
+                        req: req,
+                        method: 'get',
+                        server: server.app.options.server,
+                        service: config.name
                     })
                 }
             }
@@ -27,8 +30,11 @@ export const init_crud_routing = (server: AppServer, config: EndPointConfig) => 
             options: {
                 cors: true,
                 handler: (req: Request) => {
-                    return new Promise(ok => {
-                        ok('post successful')
+                    return call({
+                        req: req,
+                        method: 'post',
+                        server: server.app.options.server,
+                        service: config.name
                     })
                 }
             }
@@ -39,8 +45,11 @@ export const init_crud_routing = (server: AppServer, config: EndPointConfig) => 
             options: {
                 cors: true,
                 handler: (req: Request) => {
-                    return new Promise(ok => {
-                        ok('delete successful')
+                    return call({
+                        req: req,
+                        method: 'delete',
+                        server: server.app.options.server,
+                        service: config.name
                     })
                 }
             }
@@ -48,4 +57,46 @@ export const init_crud_routing = (server: AppServer, config: EndPointConfig) => 
     ]
 
     return routes;
+}
+
+interface Props {
+    req: Request, server:AppServer, service: string, method: string,
+}
+
+const call = (props: Props) => {
+
+    let context = props.server.get_context_instance();
+    let service = context.get_service_instance(props.service);
+
+    try{
+        return call_fn(service[props.method], service, props.req).then(res => {
+            return res;
+        }, err => {
+            return handle_error(err);
+        })
+    } catch (err) {
+        return handle_error(err);
+    }
+}
+
+const call_fn = ( func: Function, owner, args) => {
+    return func.call(owner, args);
+}
+
+const handle_error = err => {
+
+    let error = null;
+
+    if (typeof err === 'string' || err instanceof String ) {
+        error = err;
+    } else {
+        error = JSON.stringify(err);
+    }
+
+    let boomed = boom.badRequest(error);
+
+    boomed.output.payload.message = error;
+
+    return boomed;
+
 }

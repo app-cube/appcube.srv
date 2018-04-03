@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const hapi_1 = require("hapi");
 const registration_1 = require("../../plugins/registration");
+const context_1 = require("../context");
 class AppServer extends hapi_1.Server {
     constructor(props) {
         super(Object.assign({}, props.hosting_options, { routes: {
@@ -28,6 +29,12 @@ class AppServer extends hapi_1.Server {
                 console.log('Could not start server. Error: ' + JSON.stringify(e));
             }
         });
+        this.get_context_instance = () => {
+            return new context_1.Context(this);
+        };
+        this.get_service_instance = (name, context) => {
+            let ctx = context ? context : this.get_context_instance();
+        };
         this.app.options = props;
     }
 }
