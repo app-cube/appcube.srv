@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = require("./lib/app");
 let props = {
     hosting_options: {
-        host: 'localhost',
+        host: process.env.PORT ? undefined : 'localhost',
         port: process.env.PORT || 8000,
     },
     database_options: {

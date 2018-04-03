@@ -2,7 +2,7 @@ import { AppServer } from './lib/app';
 
 let props: any = {
     hosting_options:{
-        host: 'localhost',
+        host: process.env.PORT ? undefined : 'localhost',
         port: process.env.PORT as any || 8000,
     }, 
     database_options: {
