@@ -23,7 +23,7 @@ const load_routes = async (server: AppServer) => {
 
     for(var f in config_files) {
 
-        let config_path = join(dir, `/${config_files[f]}`);
+        let config_path = join(dir,`/${config_files[f]}`);
 
         let endpoint_config:{
             config: EndPointConfig
