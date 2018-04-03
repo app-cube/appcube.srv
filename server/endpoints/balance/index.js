@@ -7,6 +7,23 @@ exports.config = {
         return {
             'Balance': model_1.Balance
         };
-    }
+    },
+    routes: [
+        {
+            path: '/addcredit',
+            method: 'post',
+            options: {
+                cors: true,
+                handler: (req) => {
+                    let server = req.app['server'];
+                    return server.get_context_instance().exec_call({
+                        req: req,
+                        method: 'addcredit',
+                        service: 'balance'
+                    });
+                }
+            }
+        }
+    ]
 };
 //# sourceMappingURL=index.js.map

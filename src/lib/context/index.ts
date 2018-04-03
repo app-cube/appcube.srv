@@ -6,6 +6,8 @@ import * as fse from 'fs-extra';
 import { Sequelize } from 'sequelize-typescript';
 import * as caps from 'capitalize';
 import { Service } from '../service';
+import { Request } from 'hapi';
+import * as boom from 'boom';
 
 export class Context {
 
@@ -35,7 +37,7 @@ export class Context {
     }
 
     get_service_instance = (name: string): Service<any> => {
-        
+
         let options: AppServerOptions = this.server.app.options;
 
         let dir = path(join('/server/', options.path_options.endpoints));
@@ -53,5 +55,47 @@ export class Context {
         }
 
         return service;
+    }
+
+    exec_call = (props:{
+        req: Request, service: string, method: string
+    }) => {
+
+        let service = this.get_service_instance(props.service);
+
+        try {
+
+            return this.call_fn(service[props.method], service, props.req).then( res => {
+                return res;                
+            }, err => {
+                return this.handle_error(err);
+            })
+
+        } catch (e) {
+            return this.handle_error(e);
+        }
+
+    }
+
+    private call_fn = ( func: Function, owner, args) => {
+        return func.call(owner, args);
+    }
+    
+    private handle_error = err => {
+    
+        let error = null;
+    
+        if (typeof err === 'string' || err instanceof String ) {
+            error = err;
+        } else {
+            error = JSON.stringify(err);
+        }
+    
+        let boomed = boom.badRequest(error);
+    
+        boomed.output.payload.message = error;
+    
+        return boomed;
+    
     }
 }

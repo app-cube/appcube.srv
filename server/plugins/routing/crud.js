@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var join = require('join-path');
-const boom = require("boom");
 exports.init_crud_routing = (server, config) => {
     let $prefix = '/api';
     let routes = [
@@ -55,31 +54,10 @@ exports.init_crud_routing = (server, config) => {
 };
 const call = (props) => {
     let context = props.server.get_context_instance();
-    let service = context.get_service_instance(props.service);
-    try {
-        return call_fn(service[props.method], service, props.req).then(res => {
-            return res;
-        }, err => {
-            return handle_error(err);
-        });
-    }
-    catch (err) {
-        return handle_error(err);
-    }
-};
-const call_fn = (func, owner, args) => {
-    return func.call(owner, args);
-};
-const handle_error = err => {
-    let error = null;
-    if (typeof err === 'string' || err instanceof String) {
-        error = err;
-    }
-    else {
-        error = JSON.stringify(err);
-    }
-    let boomed = boom.badRequest(error);
-    boomed.output.payload.message = error;
-    return boomed;
+    return context.exec_call({
+        method: props.method,
+        req: props.req,
+        service: props.service
+    });
 };
 //# sourceMappingURL=crud.js.map

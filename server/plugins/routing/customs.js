@@ -13,13 +13,25 @@ exports.init_custom_routing = (server, config) => {
             config: {
                 cors: true,
                 handler: (req) => {
-                    req.app['server'] = server.app.options.server;
-                    return route.config['handler'](req);
+                    return call({
+                        req: req,
+                        method: route.path,
+                        server: server.app.options.server,
+                        service: config.name
+                    });
                 }
             }
         };
         return route_config;
     });
     return routes;
+};
+const call = (props) => {
+    let context = props.server.get_context_instance();
+    return context.exec_call({
+        method: props.method,
+        req: props.req,
+        service: props.service
+    });
 };
 //# sourceMappingURL=customs.js.map

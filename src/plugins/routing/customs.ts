@@ -20,8 +20,12 @@ export const init_custom_routing = (server: AppServer, config: EndPointConfig) =
             config: {
                 cors: true,
                 handler: ( req: Request ) => {                                        
-                    req.app['server'] = server.app.options.server;
-                    return route.config['handler'](req);
+                    return call({
+                        req: req,
+                        method: route.path,
+                        server: server.app.options.server,
+                        service: config.name
+                    })
                 }
             }
         };
@@ -31,4 +35,17 @@ export const init_custom_routing = (server: AppServer, config: EndPointConfig) =
 
     return routes;
 
+}
+
+interface Props {
+    req: Request, server:AppServer, service: string, method: string,
+}
+
+const call = (props: Props) => {
+    let context = props.server.get_context_instance();
+    return context.exec_call({
+        method: props.method,
+        req: props.req,
+        service: props.service
+    })
 }
