@@ -13,7 +13,9 @@ export const config = {
     register : async (server: AppServer, options) => { 
 
         let connection_options = server.app.options.database_options;
-        const sequelize = new Sequelize( connection_options);
+        const sequelize = new Sequelize( {
+            ...connection_options
+        });
         let models = await load_models(server, sequelize);
 
         for(var i in models) {

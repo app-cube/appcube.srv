@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var join = require('join-path');
-exports.init_crud_routing = (server, config) => {
+exports.init_routing = (server, config) => {
     let $prefix = '/api';
     let routes = [
         {
@@ -12,8 +12,8 @@ exports.init_crud_routing = (server, config) => {
                 handler: (req) => {
                     return call({
                         req: req,
-                        method: 'get',
-                        server: server.app.options.server,
+                        operation: 'get',
+                        server: server.app.options.host,
                         service: config.name
                     });
                 }
@@ -27,8 +27,8 @@ exports.init_crud_routing = (server, config) => {
                 handler: (req) => {
                     return call({
                         req: req,
-                        method: 'post',
-                        server: server.app.options.server,
+                        operation: 'post',
+                        server: server.app.options.host,
                         service: config.name
                     });
                 }
@@ -42,8 +42,8 @@ exports.init_crud_routing = (server, config) => {
                 handler: (req) => {
                     return call({
                         req: req,
-                        method: 'delete',
-                        server: server.app.options.server,
+                        operation: 'delete',
+                        server: server.app.options.host,
                         service: config.name
                     });
                 }
@@ -55,7 +55,7 @@ exports.init_crud_routing = (server, config) => {
 const call = (props) => {
     let context = props.server.get_context_instance();
     return context.exec_call({
-        method: props.method,
+        operation: props.operation,
         req: props.req,
         service: props.service
     });

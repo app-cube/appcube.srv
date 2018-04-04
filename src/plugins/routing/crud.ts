@@ -3,7 +3,7 @@ import { EndPointConfig } from '../../types';
 var join = require('join-path');
 import { Request } from 'hapi';
 
-export const init_crud_routing = (server: AppServer, config: EndPointConfig) => {
+export const init_routing = (server: AppServer, config: EndPointConfig) => {
 
     let $prefix = '/api';
 
@@ -16,8 +16,8 @@ export const init_crud_routing = (server: AppServer, config: EndPointConfig) => 
                 handler: (req: Request) => {
                     return call({
                         req: req,
-                        method: 'get',
-                        server: server.app.options.server,
+                        operation: 'get',
+                        server: server.app.options.host,
                         service: config.name
                     })
                 }
@@ -31,8 +31,8 @@ export const init_crud_routing = (server: AppServer, config: EndPointConfig) => 
                 handler: (req: Request) => {
                     return call({
                         req: req,
-                        method: 'post',
-                        server: server.app.options.server,
+                        operation: 'post',
+                        server: server.app.options.host,
                         service: config.name
                     })
                 }
@@ -46,8 +46,8 @@ export const init_crud_routing = (server: AppServer, config: EndPointConfig) => 
                 handler: (req: Request) => {
                     return call({
                         req: req,
-                        method: 'delete',
-                        server: server.app.options.server,
+                        operation: 'delete',
+                        server: server.app.options.host,
                         service: config.name
                     })
                 }
@@ -59,13 +59,13 @@ export const init_crud_routing = (server: AppServer, config: EndPointConfig) => 
 }
 
 interface Props {
-    req: Request, server:AppServer, service: string, method: string,
+    req: Request, server:AppServer, service: string, operation: string,
 }
 
 const call = (props: Props) => {
     let context = props.server.get_context_instance();
     return context.exec_call({
-        method: props.method,
+        operation: props.operation,
         req: props.req,
         service: props.service
     })

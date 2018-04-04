@@ -8,6 +8,7 @@ import * as caps from 'capitalize';
 import { Service } from '../service';
 import { Request } from 'hapi';
 import * as boom from 'boom';
+import * as _ from 'lodash';
 
 export class Context {
 
@@ -57,15 +58,37 @@ export class Context {
         return service;
     }
 
+    exec_custom = (req: Request) => {
+        let srv_name = this.get_srv_name(req);
+        let oper_name = this.get_operation_name(req);
+        return this.exec_call({
+            req: req,
+            service: srv_name,
+            operation: oper_name
+        });
+    }
+
+    private get_srv_name = (req: Request) => {
+        let path: string[] = req.path.split('/');        
+        return path[ path.indexOf('api') + 1];
+    }
+
+    private get_operation_name = (req: Request) => {
+        let path: string[] = req.path.split('/');
+        return path[ path.indexOf('api') + 2];
+    }
+
     exec_call = (props:{
-        req: Request, service: string, method: string
+        req: Request, service: string, operation: string
     }) => {
 
-        let service = this.get_service_instance(props.service);
+        let srv = this.get_service_instance(props.service);
 
         try {
-
-            return this.call_fn(service[props.method], service, props.req).then( res => {
+            
+            let args = this.get_args(props.req);
+            
+            return this.call_fn(srv[props.operation], srv, args).then( res => {
                 return res;                
             }, err => {
                 return this.handle_error(err);
@@ -78,7 +101,26 @@ export class Context {
     }
 
     private call_fn = ( func: Function, owner, args) => {
-        return func.call(owner, args);
+        return func.apply(owner, args);
+    }
+
+    private get_args = (req: Request) => {
+        if (req.method) {
+            let args = null;            
+            if ( ( _.findIndex(['post', 'put', 'delete'], req.method.toLowerCase())) && req.payload ) {
+                args = req.payload;
+            }
+            if (req.method.toLowerCase() === 'get' && req.query) {
+                args = req.query;
+            }
+            if (args) {
+                let params = _.map(Object.keys(args), k => {
+                    return args[k];
+                });
+                return params;
+            }
+        }
+        return null;
     }
     
     private handle_error = err => {
@@ -88,7 +130,12 @@ export class Context {
         if (typeof err === 'string' || err instanceof String ) {
             error = err;
         } else {
-            error = JSON.stringify(err);
+
+            if (err.message) {
+                error = err.message
+            } else {
+                error = JSON.stringify(err);
+            }
         }
     
         let boomed = boom.badRequest(error);
@@ -97,5 +144,11 @@ export class Context {
     
         return boomed;
     
+    }
+}
+
+export const Static = {
+    exec: () => {
+
     }
 }

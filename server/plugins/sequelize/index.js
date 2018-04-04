@@ -18,7 +18,7 @@ exports.config = {
     version: '1.0.0',
     register: (server, options) => __awaiter(this, void 0, void 0, function* () {
         let connection_options = server.app.options.database_options;
-        const sequelize = new sequelize_typescript_1.Sequelize(connection_options);
+        const sequelize = new sequelize_typescript_1.Sequelize(Object.assign({}, connection_options));
         let models = yield load_models(server, sequelize);
         for (var i in models) {
             let model = models[i];

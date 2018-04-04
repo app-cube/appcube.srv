@@ -6,7 +6,7 @@ import { EndPointConfig } from '../../types';
 import * as fse from 'fs-extra';
 var path = require('root-path');
 var join = require('join-path');
-import { init_crud_routing } from './crud';
+import { init_routing } from './crud';
 import { init_custom_routing } from './customs';
 
 export const config = {
@@ -31,9 +31,10 @@ const load_routes = async (server: AppServer) => {
         } = require(config_path);
 
         let routes: any = [
-            ...init_crud_routing(server, endpoint_config.config), 
-            ...init_custom_routing(server, endpoint_config.config)           
+            ...init_routing(server, endpoint_config.config),
+            ...init_custom_routing(server, endpoint_config.config)
         ];
+
         server.route(routes);
     }
 

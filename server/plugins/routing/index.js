@@ -28,7 +28,7 @@ const load_routes = (server) => __awaiter(this, void 0, void 0, function* () {
         let config_path = join(dir, `/${config_files[f]}`);
         let endpoint_config = require(config_path);
         let routes = [
-            ...crud_1.init_crud_routing(server, endpoint_config.config),
+            ...crud_1.init_routing(server, endpoint_config.config),
             ...customs_1.init_custom_routing(server, endpoint_config.config)
         ];
         server.route(routes);

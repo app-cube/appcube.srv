@@ -22,7 +22,8 @@ export class Service<T extends Model<T>> {
     }
 
     get model(): SqlModel<T, any> {
-        return this.context.server.app.options.sequelize.models[this.resource] as any
+        let model = this.context.server.app.options.sequelize.models[this.resource] as any;
+        return model;
     }
 
     get = ( options?: FindOptions<T> ): Promise<Array<T>> => {       

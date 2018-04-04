@@ -21,7 +21,7 @@ export class AppServer extends Server {
 
     run = async () => {
 
-        this.app.options.server = this;
+        this.app.options.host = this;
 
         await register_plugins(this);
 

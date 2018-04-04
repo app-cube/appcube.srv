@@ -6,7 +6,7 @@ import { ServerRoute, Request } from 'hapi';
 import * as _ from 'lodash';
 var slash = require('slash');
 
-export const init_custom_routing = (server: AppServer, config: EndPointConfig) => {
+export const init_custom_routing = (appserver: AppServer, config: EndPointConfig) => {
 
     let prefix = '/api';
 
@@ -14,38 +14,19 @@ export const init_custom_routing = (server: AppServer, config: EndPointConfig) =
 
         let __path = join(prefix, `/${config.name}/${route.path}`);
 
+        let handler = route.options ? route.options.handler : route.handler;
+
         let route_config = {
             method: route.method,
             path: slash(__path),
             config: {
                 cors: true,
-                handler: ( req: Request ) => {                                        
-                    return call({
-                        req: req,
-                        method: route.path,
-                        server: server.app.options.server,
-                        service: config.name
-                    })
+                handler: ( req: Request ) => {
+                    return appserver.app.options.host.get_context_instance().exec_custom(req);
                 }
             }
         };
-
         return route_config;
     });
-
     return routes;
-
-}
-
-interface Props {
-    req: Request, server:AppServer, service: string, method: string,
-}
-
-const call = (props: Props) => {
-    let context = props.server.get_context_instance();
-    return context.exec_call({
-        method: props.method,
-        req: props.req,
-        service: props.service
-    })
 }

@@ -24,7 +24,8 @@ class Service {
         return this._context;
     }
     get model() {
-        return this.context.server.app.options.sequelize.models[this.resource];
+        let model = this.context.server.app.options.sequelize.models[this.resource];
+        return model;
     }
 }
 exports.Service = Service;

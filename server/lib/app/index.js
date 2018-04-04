@@ -19,7 +19,7 @@ class AppServer extends hapi_1.Server {
                 request: ['info', 'debug']
             } }));
         this.run = () => __awaiter(this, void 0, void 0, function* () {
-            this.app.options.server = this;
+            this.app.options.host = this;
             yield registration_1.register_plugins(this);
             try {
                 yield this.start();

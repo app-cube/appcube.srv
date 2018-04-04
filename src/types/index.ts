@@ -1,5 +1,6 @@
 import { ServerRoute } from 'hapi';
 import { Model, Sequelize } from 'sequelize-typescript';
+import { Context } from '../lib/context';
 
 export interface DatabaseOptions {
     database: string,
@@ -22,7 +23,7 @@ export interface AppServerOptions {
 
     database_options: DatabaseOptions,
     sequelize?: Sequelize,
-    server?: any, //AppServer,
+    host?: any, //AppServer,
     models?: any[]
 }
 
@@ -41,7 +42,7 @@ export interface EndPointConfig {
     name: string,
     models?: ModelDefinitions  | GetModels,
     routes?: Array<RouteConfig>,
-    getservice? : (context: any) => any
+    getservice? : (context: Context) => any
 }
 
 export interface AppInternalSettings {
