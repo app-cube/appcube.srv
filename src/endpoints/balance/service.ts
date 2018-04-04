@@ -16,22 +16,18 @@ export class BalanceService extends Service<Balance> {
             }
         });
 
-        let bal: any = list.length > 0 ? list[0] : null;
+        let bal: Balance = list.length > 0 ? list[0] : null;
 
         if (!bal) {            
             bal = {
                 id: uuid(),
                 userid: userId,
                 balanceamount: amount ? amount : 0
-            }
-        } else {
-            bal = {
-                ...bal,
-                balanceamount: bal.balanceamount + amount
-            }            
-            bal = bal.dataValues;
+            } as any            
+        } else {    
+            bal.balanceamount += amount;            
         }
 
-        return this.post(bal);
+        return this.post(bal.get({ plain: true }))
     }
 }

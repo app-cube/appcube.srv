@@ -28,10 +28,9 @@ class BalanceService extends service_1.Service {
                 };
             }
             else {
-                bal = Object.assign({}, bal, { balanceamount: bal.balanceamount + amount });
-                bal = bal.dataValues;
+                bal.balanceamount += amount;
             }
-            return this.post(bal);
+            return this.post(bal.get({ plain: true }));
         });
     }
 }

@@ -1,9 +1,9 @@
 import { AppServer } from '../../lib/app';
-import { EndPointConfig } from '../../types';
+import { ServiceConfig } from '../../types';
 var join = require('join-path');
 import { Request } from 'hapi';
 
-export const init_routing = (server: AppServer, config: EndPointConfig) => {
+export const init_routing = (server: AppServer, config: ServiceConfig) => {
 
     let $prefix = '/api';
 

@@ -11,12 +11,9 @@ exports.init_custom_routing = (appserver, config) => {
         let route_config = {
             method: route.method,
             path: slash(__path),
-            config: {
-                cors: true,
-                handler: (req) => {
+            config: Object.assign({ cors: true, handler: (req) => {
                     return appserver.app.options.host.get_context_instance().exec_custom(req);
-                }
-            }
+                } }, route.config)
         };
         return route_config;
     });

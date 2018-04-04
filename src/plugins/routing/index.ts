@@ -2,7 +2,7 @@ import * as Hapi from 'hapi';
 import { Request} from 'hapi';
 import { AppServer } from '../../lib/app';
 import { AppServerOptions } from '../../types';
-import { EndPointConfig } from '../../types';
+import { ServiceConfig } from '../../types';
 import * as fse from 'fs-extra';
 var path = require('root-path');
 var join = require('join-path');
@@ -27,7 +27,7 @@ const load_routes = async (server: AppServer) => {
         let config_path = join(dir,`/${config_files[f]}`);
 
         let endpoint_config:{
-            config: EndPointConfig
+            config: ServiceConfig
         } = require(config_path);
 
         let routes: any = [

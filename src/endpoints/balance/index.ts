@@ -1,11 +1,12 @@
 import { Table, Column, Model, ForeignKey, HasMany } from 'sequelize-typescript';
-import { EndPointConfig } from '../../types';
+import { ServiceConfig } from '../../types';
 import { AppServer } from '../../lib/app';
 import { Balance } from './model';
-import { Request } from 'hapi';
+import { Request, RouteOptions } from 'hapi';
 import { BalanceService } from './service';
+import * as Joi from 'joi';
 
-export const config: EndPointConfig = {
+export const config: ServiceConfig = {
     name: 'balance',
     models: () => {
         return {
@@ -18,7 +19,15 @@ export const config: EndPointConfig = {
     routes: [
         {
             path: 'addcredit',
-            method: 'post'
-        }
+            method: 'post',
+            config: {
+                validate: {
+                    payload: {
+                        userId: Joi.string().required(),
+                        amount: Joi.number().required()
+                    }
+                }                
+            }
+        } as any
     ]
 }

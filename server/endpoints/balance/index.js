@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const model_1 = require("./model");
 const service_1 = require("./service");
+const Joi = require("joi");
 exports.config = {
     name: 'balance',
     models: () => {
@@ -15,7 +16,15 @@ exports.config = {
     routes: [
         {
             path: 'addcredit',
-            method: 'post'
+            method: 'post',
+            config: {
+                validate: {
+                    payload: {
+                        userId: Joi.string().required(),
+                        amount: Joi.number().required()
+                    }
+                }
+            }
         }
     ]
 };

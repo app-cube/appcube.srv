@@ -4,7 +4,7 @@ import { AppServer } from '../../lib/app';
 import * as fse from 'fs-extra';
 var path = require('root-path');
 var join = require('join-path');
-import { EndPointConfig, ModelDefinitions } from '../../types';
+import { ServiceConfig, ModelDefinitions } from '../../types';
 import * as _ from 'lodash';
 
 export const config = {
@@ -52,7 +52,7 @@ const load_models = async (server:AppServer, sequelize : Sequelize): Promise<Mod
     for(var i in files) {
         let config_path = join(dir, `/${files[i]}`);
         let endpoint:{
-            config: EndPointConfig
+            config: ServiceConfig
         } = require(config_path);
 
         let modelDefs = endpoint.config.models;

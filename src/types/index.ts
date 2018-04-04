@@ -38,7 +38,7 @@ export interface RouteConfig extends ServerRoute {
     type?: RouteType
 }
 
-export interface EndPointConfig {
+export interface ServiceConfig {
     name: string,
     models?: ModelDefinitions  | GetModels,
     routes?: Array<RouteConfig>,

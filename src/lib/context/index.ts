@@ -1,7 +1,7 @@
 import { AppServer } from '../app';
 var path = require('root-path');
 var join = require('join-path');
-import { AppServerOptions, EndPointConfig } from '../../types';
+import { AppServerOptions, ServiceConfig } from '../../types';
 import * as fse from 'fs-extra';
 import { Sequelize } from 'sequelize-typescript';
 import * as caps from 'capitalize';
@@ -44,7 +44,7 @@ export class Context {
         let dir = path(join('/server/', options.path_options.endpoints));
         let config_file_path = join(dir, name);
         let endpoint :{
-            config: EndPointConfig
+            config: ServiceConfig
         } = require(config_file_path);
 
         let service:Service<any> = null;
