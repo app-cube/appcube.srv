@@ -12,12 +12,17 @@ const hapi_1 = require("hapi");
 const registration_1 = require("../../plugins/registration");
 const context_1 = require("../context");
 class AppServer extends hapi_1.Server {
-    constructor(props) {
-        super(Object.assign({}, props.hosting_options, { routes: {
+    constructor() {
+        super({
+            host: 'localhost',
+            port: 8000,
+            routes: {
                 cors: true
-            }, debug: {
+            },
+            debug: {
                 request: ['info', 'debug']
-            } }));
+            }
+        });
         this.init_server = () => __awaiter(this, void 0, void 0, function* () {
             this.app.options.host = this;
             return registration_1.register_plugins(this);
@@ -41,7 +46,7 @@ class AppServer extends hapi_1.Server {
         this.get_service_instance = (name, context) => {
             let ctx = context ? context : this.get_context_instance();
         };
-        this.app.options = props;
+        this.app.options = {};
     }
 }
 exports.AppServer = AppServer;

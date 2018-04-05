@@ -19,7 +19,7 @@ export const config = {
 
 const load_routes = async (server: AppServer) => {
     let options: AppServerOptions = server.app.options;
-    let dir = path(join('/server/', options.path_options.endpoints));
+    let dir = path('/server/endpoints');
     let config_files = await fse.readdir(dir);
 
     for(var f in config_files) {

@@ -4,17 +4,17 @@ const appserver_1 = require("../lib/appserver");
 const loader_1 = require("../plugins/sequelize/loader");
 let props = {
     hosting_option: {
-        host: process.env.PORT ? undefined : 'localhost',
-        port: process.env.PORT || 8000,
+        host: 'localhost',
+        port: 8000 // process.env.PORT as any || 8000,
     },
     path_options: {
         endpoints: '/endpoints'
     }
 };
-exports.app = new appserver_1.AppServer(props);
-exports.app.register_loaders(new Map([
+const app = new appserver_1.AppServer();
+app.register_loaders(new Map([
     ['sequelize-loader', new loader_1.SequelizeLoader({
-            server: exports.app,
+            server: app,
             options: {
                 host: 'sql6003.site4now.net',
                 database: 'DB_A30462_schoolzdb',
@@ -24,5 +24,5 @@ exports.app.register_loaders(new Map([
             }
         })]
 ]));
-exports.app.start_server();
+app.start_server();
 //# sourceMappingURL=index.js.map

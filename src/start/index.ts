@@ -5,17 +5,18 @@ import { config as routing_loader } from '../plugins/routing';
 
 let props: any = {
     hosting_option:{
-        host: process.env.PORT ? undefined : 'localhost',
-        port: process.env.PORT as any || 8000,
+        host: 'localhost', // process.env.PORT ? undefined : 'localhost',
+        port: 8000 // process.env.PORT as any || 8000,
     },
     path_options:{
         endpoints: '/endpoints'
     }
 }
 
-export const app: AppServer = new AppServer(props);
+const app: AppServer = new AppServer();
 
 app.register_loaders(new Map<string, any>([
+
     ['sequelize-loader', new SequelizeLoader({ 
         server: app,
         options: {

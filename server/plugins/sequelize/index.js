@@ -12,11 +12,11 @@ const loader_1 = require("./loader");
 exports.config = {
     name: 'sequelize-connection',
     version: '1.0.0',
-    register: (app, options) => __awaiter(this, void 0, void 0, function* () {
-        let loader = app.app.options.loaders ? app.app.options.loaders.get('sequelize-loader') : null;
+    register: (appserver, options) => __awaiter(this, void 0, void 0, function* () {
+        let loader = appserver.app.options.loaders ? appserver.app.options.loaders.get('sequelize-loader') : null;
         if (!loader) {
             loader = new loader_1.SequelizeLoader({
-                server: app,
+                server: appserver,
                 options: {
                     dialect: 'sqlite'
                 }

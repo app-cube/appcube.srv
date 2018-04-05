@@ -7,11 +7,7 @@ describe('Routing', ()=> {
 
     it('get route should work', async ()=> {
         
-        let server = new AppServer({
-            path_options:{
-                endpoints: '/endpoints'
-            }
-        });
+        let server = new AppServer();
 
         let res = await server.inject('/api/appuser/get');
         

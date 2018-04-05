@@ -22,7 +22,7 @@ exports.config = {
 };
 const load_routes = (server) => __awaiter(this, void 0, void 0, function* () {
     let options = server.app.options;
-    let dir = path(join('/server/', options.path_options.endpoints));
+    let dir = path('/server/endpoints');
     let config_files = yield fse.readdir(dir);
     for (var f in config_files) {
         let config_path = join(dir, `/${config_files[f]}`);

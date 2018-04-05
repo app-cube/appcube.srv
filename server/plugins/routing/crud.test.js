@@ -13,11 +13,7 @@ const expect = chai.expect;
 const appserver_1 = require("../../lib/appserver");
 describe('Routing', () => {
     it('get route should work', () => __awaiter(this, void 0, void 0, function* () {
-        let server = new appserver_1.AppServer({
-            path_options: {
-                endpoints: '/endpoints'
-            }
-        });
+        let server = new appserver_1.AppServer();
         let res = yield server.inject('/api/appuser/get');
         expect(JSON.parse(res.payload).length).to.be.gt(0);
     }));

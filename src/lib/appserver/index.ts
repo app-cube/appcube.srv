@@ -6,9 +6,10 @@ import * as _ from 'lodash';
 
 export class AppServer extends Server {
 
-    constructor(props: AppServerOptions) {
-        super({
-            ...props.hosting_options,
+    constructor() {        
+        super({            
+            host: 'localhost',
+            port: 8000, 
             routes: {
                 cors: true
             },
@@ -16,7 +17,8 @@ export class AppServer extends Server {
                 request: ['info', 'debug']
             }
         } as any);
-        this.app.options = props;
+        
+        this.app.options = {};
     }
 
     app: AppInternalSettings;

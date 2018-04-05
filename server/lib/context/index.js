@@ -10,7 +10,7 @@ class Context {
     constructor(server) {
         this.get_service_instance = (name) => {
             let options = this.server.app.options;
-            let dir = path(join('/server/', options.path_options.endpoints));
+            let dir = path('/server/endpoints');
             let config_file_path = join(dir, name);
             let endpoint = require(config_file_path);
             let service = null;

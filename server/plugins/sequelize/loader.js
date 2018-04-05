@@ -38,7 +38,7 @@ class SequelizeLoader {
         });
         this.loadmodels = () => __awaiter(this, void 0, void 0, function* () {
             let options = this.server.app.options;
-            let dir = path(join('/server/', options.path_options.endpoints));
+            let dir = path('/server/endpoints');
             let files = yield fse.readdir(dir);
             let models = [];
             for (var i in files) {
@@ -66,7 +66,7 @@ class SequelizeLoader {
         return this._props;
     }
     get server() {
-        return this._server;
+        return this.props.server;
     }
     get sequelize() {
         if (!this._sequelize) {

@@ -25,7 +25,7 @@ export class Context {
 
         let options: AppServerOptions = this.server.app.options;
 
-        let dir = path(join('/server/', options.path_options.endpoints));
+        let dir = path('/server/endpoints');
         let config_file_path = join(dir, name);
         let endpoint :{
             config: ServiceConfig

@@ -18,8 +18,7 @@ export class SequelizeLoader {
         this._props = props;
     }
 
-    private _props: Props;
-    private _server: AppServer;
+    private _props: Props;    
     private _sequelize: Sequelize;
 
     get props(): Props {
@@ -27,7 +26,7 @@ export class SequelizeLoader {
     }
 
     get server(): AppServer {
-        return this._server;
+        return this.props.server;
     }
 
     get sequelize(): Sequelize {
@@ -66,7 +65,7 @@ export class SequelizeLoader {
 
     loadmodels = async (): Promise<Model<any>[]> => {
         let options: AppServerOptions = this.server.app.options;
-        let dir = path(join('/server/', options.path_options.endpoints));
+        let dir = path('/server/endpoints');
         let files = await fse.readdir(dir);
         let models = [];
 
