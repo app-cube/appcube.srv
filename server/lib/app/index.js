@@ -18,9 +18,15 @@ class AppServer extends hapi_1.Server {
             }, debug: {
                 request: ['info', 'debug']
             } }));
-        this.run = () => __awaiter(this, void 0, void 0, function* () {
+        this.init_server = () => __awaiter(this, void 0, void 0, function* () {
             this.app.options.host = this;
-            yield registration_1.register_plugins(this);
+            return registration_1.register_plugins(this);
+        });
+        this.register_loaders = (loaders) => __awaiter(this, void 0, void 0, function* () {
+            this.app.options.loaders = loaders;
+        });
+        this.start_server = (loaders) => __awaiter(this, void 0, void 0, function* () {
+            yield this.init_server();
             try {
                 yield this.start();
                 console.log('server running at: ' + this.info.uri);

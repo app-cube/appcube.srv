@@ -17,6 +17,9 @@ let props = {
         endpoints: '/endpoints'
     }
 };
-exports.server = new app_1.AppServer(props);
-exports.server.run();
+exports.app = new app_1.AppServer(props);
+// app.register_loaders(new Map<string, any>([
+//     ['sequelize-loader', new SequelizeLoader({ server: app })]   
+// ]));
+exports.app.start_server();
 //# sourceMappingURL=app.js.map

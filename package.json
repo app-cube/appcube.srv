@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/lab/bin/lab -v -L -C -c -t 85 -P ./server/**/*.test.js"
   },
   "dependencies": {
     "@types/fs-extra": "^5.0.0",
@@ -33,6 +33,7 @@
     "sequelize": "^4.28.6",
     "sequelize-typescript": "^0.6.2",
     "slash": "^1.0.0",
+    "sqlite3": "^4.0.0",
     "string-format": "^0.5.0",
     "tedious": "^2.1.5",
     "upath": "^1.0.2",
@@ -43,13 +44,17 @@
     "@types/assert": "0.0.31",
     "@types/boom": "^4.3.9",
     "@types/capitalize": "^1.0.1",
+    "@types/chai": "^4.1.2",
     "@types/hapi": "^17.0.0",
     "@types/joi": "^13.0.7",
     "@types/lodash": "^4.14.91",
+    "@types/mocha": "^5.0.0",
     "@types/moment": "^2.13.0",
     "@types/q": "^1.0.6",
     "@types/sequelize": "^4.27.2",
     "@types/voca": "^1.3.0",
+    "chai": "^4.1.2",
+    "mocha": "^5.0.5",
     "typescript": "^2.8.1"
   }
 }

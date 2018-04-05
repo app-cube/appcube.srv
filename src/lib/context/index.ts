@@ -146,9 +146,3 @@ export class Context {
     
     }
 }
-
-export const Static = {
-    exec: () => {
-
-    }
-}

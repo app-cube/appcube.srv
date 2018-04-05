@@ -7,7 +7,29 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "debug",
+            "name": "mocha",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "-u",
+                "tdd",
+                "--timeout",
+                "999999",
+                "--colors",            
+                "${workspaceFolder}/server/**/*.test.js"
+            ],
+            "env": {
+                "NODE_ENV": "test"
+            },
+            "internalConsoleOptions": "openOnSessionStart",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceRoot}/server/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "run",
             "program": "${workspaceFolder}\\index.js",
             "preLaunchTask": "tsc: build - tsconfig.json",
             "console": "integratedTerminal",

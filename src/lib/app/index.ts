@@ -2,6 +2,7 @@ import { Server } from 'hapi';
 import { AppServerOptions, AppInternalSettings} from '../../types';
 import { register_plugins } from '../../plugins/registration';
 import { Context } from '../context';
+import * as _ from 'lodash';
 
 export class AppServer extends Server {
 
@@ -17,14 +18,20 @@ export class AppServer extends Server {
         } as any);
         this.app.options = props;
     }
+
     app: AppInternalSettings;
 
-    run = async () => {
-
+    init_server = async () => {
         this.app.options.host = this;
+        return register_plugins(this);
+    }
 
-        await register_plugins(this);
+    register_loaders = async (loaders: Map<string, any>) => {    
+        this.app.options.loaders = loaders;               
+    }
 
+    start_server = async (loaders?: Map<string, any>) => {
+        await this.init_server();
         try {
             await this.start();
             console.log('server running at: ' + this.info.uri);

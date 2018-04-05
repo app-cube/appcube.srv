@@ -24,7 +24,8 @@ export interface AppServerOptions {
     database_options: DatabaseOptions,
     sequelize?: Sequelize,
     host?: any, //AppServer,
-    models?: any[]
+    models?: any[],
+    loaders?: Map<string, any>
 }
 
 export interface ModelDefinitions {

@@ -1,4 +1,7 @@
 import { AppServer } from './lib/app';
+import { config as sequelize_loader } from './plugins/sequelize';
+import { SequelizeLoader } from './plugins/sequelize/loader';
+import { config as routing_loader } from './plugins/routing';
 
 let props: any = {
     hosting_options:{
@@ -17,6 +20,9 @@ let props: any = {
     }
 }
 
-export const server: AppServer = new AppServer(props);
+export const app: AppServer = new AppServer(props);
+// app.register_loaders(new Map<string, any>([
+//     ['sequelize-loader', new SequelizeLoader({ server: app })]   
+// ]));
 
-server.run();
+app.start_server();

@@ -113,8 +113,4 @@ class Context {
     }
 }
 exports.Context = Context;
-exports.Static = {
-    exec: () => {
-    }
-};
 //# sourceMappingURL=index.js.map
