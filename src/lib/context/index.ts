@@ -1,4 +1,4 @@
-import { AppServer } from '../app';
+import { AppServer } from '../appserver';
 var path = require('root-path');
 var join = require('join-path');
 import { AppServerOptions, ServiceConfig } from '../../types';
@@ -17,24 +17,8 @@ export class Context {
         this._server = server;
     }
 
-
     get server(): AppServer {
         return this._server;
-    }
-
-    open_connection = () => {
-        let connection_options: any = this.server.app.options.database_options;
-        connection_options.define = {
-            freezeTableName: true,
-            hooks: { 
-                beforeBulkUpdate: function(options) {
-                    options.individualHooks = true;
-                }
-            }
-        }
-        let sequelize = new Sequelize(connection_options);
-        sequelize.addModels( this.server.app.options.models );
-        return sequelize;
     }
 
     get_service_instance = (name: string): Service<any> => {

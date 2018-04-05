@@ -1,4 +1,4 @@
-import { AppServer } from '../../lib/app';
+import { AppServer } from '../../lib/appserver';
 import { ServiceConfig } from '../../types';
 var join = require('join-path');
 import { Request } from 'hapi';

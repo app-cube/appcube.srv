@@ -1,6 +1,6 @@
 import * as Hapi from 'hapi';
 import { Request} from 'hapi';
-import { AppServer } from '../../lib/app';
+import { AppServer } from '../../lib/appserver';
 import { AppServerOptions } from '../../types';
 import { ServiceConfig } from '../../types';
 import * as fse from 'fs-extra';

@@ -1,4 +1,4 @@
-import { AppServer } from '../../lib/app';
+import { AppServer } from '../../lib/appserver';
 import { Service } from '../../lib/service';
 import * as _ from 'lodash';
 import { QueryTypes } from 'sequelize';

@@ -1,6 +1,5 @@
 import { Table, Column, Model, ForeignKey, HasMany } from 'sequelize-typescript';
 import { ServiceConfig } from '../../types';
-import { AppServer } from '../../lib/app';
 import { Balance } from './model';
 import { Request, RouteOptions } from 'hapi';
 import { BalanceService } from './service';

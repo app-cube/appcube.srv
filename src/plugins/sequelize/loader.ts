@@ -1,5 +1,5 @@
 import { Sequelize, Model } from 'sequelize-typescript';
-import { AppServer } from '../../lib/app';
+import { AppServer } from '../../lib/appserver';
 import { AppServerOptions,  DatabaseOptions } from '../../types';
 import { ServiceConfig, ModelDefinitions } from '../../types';
 import * as fse from 'fs-extra';
@@ -7,25 +7,34 @@ var path = require('root-path');
 var join = require('join-path');
 import * as _ from 'lodash';
 
+interface Props {
+    server: AppServer,
+    options: DatabaseOptions
+}
+
 export class SequelizeLoader {
 
-    constructor(props:{
-        server: AppServer
-    }) {
-        this._server = props.server
+    constructor(props: Props) {
+        this._props = props;
     }
 
+    private _props: Props;
     private _server: AppServer;
     private _sequelize: Sequelize;
+
+    get props(): Props {
+        return this._props;
+    }
 
     get server(): AppServer {
         return this._server;
     }
 
-    get sequelize(): Sequelize {        
+    get sequelize(): Sequelize {
+
         if (!this._sequelize) {
             this._sequelize = new Sequelize({
-                ...this.server.app.options.database_options
+                ...this.props.options
             })
         }
         return this._sequelize;

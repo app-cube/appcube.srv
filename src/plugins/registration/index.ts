@@ -1,6 +1,6 @@
 import * as Hapi from 'hapi';
 import { AppServerOptions } from '../../types';
-import { AppServer } from '../../lib/app';
+import { AppServer } from '../../lib/appserver';
 import { config as register_sequelize } from '../sequelize';
 import { config as register_routing } from '../routing';
 

@@ -60,14 +60,17 @@ class SequelizeLoader {
             this.sequelize.addModels(models);
             return Promise.resolve(models);
         });
-        this._server = props.server;
+        this._props = props;
+    }
+    get props() {
+        return this._props;
     }
     get server() {
         return this._server;
     }
     get sequelize() {
         if (!this._sequelize) {
-            this._sequelize = new sequelize_typescript_1.Sequelize(Object.assign({}, this.server.app.options.database_options));
+            this._sequelize = new sequelize_typescript_1.Sequelize(Object.assign({}, this.props.options));
         }
         return this._sequelize;
     }

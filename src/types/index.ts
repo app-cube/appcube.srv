@@ -12,16 +12,15 @@ export interface DatabaseOptions {
 
 export interface AppServerOptions {
     
-    hosting_options :{
+    hosting_options? :{
         host: string,
         port: string,
     },
     
-    path_options :{
+    path_options? :{
         endpoints: string
     },
 
-    database_options: DatabaseOptions,
     sequelize?: Sequelize,
     host?: any, //AppServer,
     models?: any[],

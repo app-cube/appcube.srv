@@ -1,4 +1,4 @@
-import { AppServer } from '../../lib/app';
+import { AppServer } from '../../lib/appserver';
 import { Context } from '../../lib/context';
 import { ServiceConfig } from '../../types';
 var join = require('join-path');

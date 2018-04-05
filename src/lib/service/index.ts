@@ -1,4 +1,4 @@
-import { AppServer } from '../app';
+import { AppServer } from '../appserver';
 import { FindOptions, DestroyOptions, Model as SqlModel } from 'sequelize';
 import {Model} from 'sequelize-typescript';
 import { Context } from '../context';

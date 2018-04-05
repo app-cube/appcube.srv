@@ -2,27 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var path = require('root-path');
 var join = require('join-path');
-const sequelize_typescript_1 = require("sequelize-typescript");
 const caps = require("capitalize");
 const service_1 = require("../service");
 const boom = require("boom");
 const _ = require("lodash");
 class Context {
     constructor(server) {
-        this.open_connection = () => {
-            let connection_options = this.server.app.options.database_options;
-            connection_options.define = {
-                freezeTableName: true,
-                hooks: {
-                    beforeBulkUpdate: function (options) {
-                        options.individualHooks = true;
-                    }
-                }
-            };
-            let sequelize = new sequelize_typescript_1.Sequelize(connection_options);
-            sequelize.addModels(this.server.app.options.models);
-            return sequelize;
-        };
         this.get_service_instance = (name) => {
             let options = this.server.app.options;
             let dir = path(join('/server/', options.path_options.endpoints));
